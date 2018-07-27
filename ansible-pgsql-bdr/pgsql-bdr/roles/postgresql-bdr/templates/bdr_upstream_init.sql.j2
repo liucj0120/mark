@@ -1,0 +1,10 @@
+SELECT bdr.bdr_group_create(
+  local_node_name := '{{ inventory_hostname }}',
+  node_external_dsn := 'host={{ pgbdr_upstream_host }} port={{ pgbdr_port }} dbname={{ pgbdr_database }}'
+);
+SELECT bdr.bdr_node_join_wait_for_ready();
+
+SELECT bdr.bdr_group_create(
+  local_node_name := 'master',
+  node_external_dsn := 'host=10.82.66.13 port=5432 dbname=sfm_db'
+);

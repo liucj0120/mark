@@ -1,0 +1,12 @@
+---
+# tasks file for ubicast.postgresql-node
+
+- include_vars:
+    dir: .
+
+- include_tasks: _01-repo.yml
+- include_tasks: _02-install.yml
+- include_tasks: _03-auth.yml
+- include_tasks: _04-config.yml
+- include_tasks: _05-sync.yml
+- include_tasks: _06-monit.yml

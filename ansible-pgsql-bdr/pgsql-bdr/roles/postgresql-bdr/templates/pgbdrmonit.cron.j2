@@ -1,0 +1,7 @@
+# /etc/cron.d/pgbdrmonit:
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO="{{ pgbdr_cron_emails | join(',') }}"
+
+*/5 * * * * {{ pgbdr_cron_user }} pgbdrmonit.py >/dev/null

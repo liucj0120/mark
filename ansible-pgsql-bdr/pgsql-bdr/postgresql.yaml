@@ -1,0 +1,10 @@
+- hosts: db_servers
+  become: true
+  roles:
+     - {
+       role: postgresql-bdr,
+       pgbdr_upstream_host: 10.82.66.13,
+       pgbdr_database: sfm_db,
+       pgbdr_monitoting: True,
+       pgbdr_first_downstream_host: 10.82.66.14
+     }

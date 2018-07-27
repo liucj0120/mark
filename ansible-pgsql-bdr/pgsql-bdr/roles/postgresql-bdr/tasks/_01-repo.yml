@@ -1,0 +1,27 @@
+---
+
+- name: PostgreSQL BDR | Add PostgreSQL repo key
+  apt_key:
+    id: '{{ pgbdr_pgsql_apt_key_id }}'
+    url: '{{ pgbdr_pgsql_apt_key_url }}'
+    state: present
+
+- name: PostgreSQL BDR | Add PostgreSQL repo
+  apt_repository:
+    repo: '{{ pgbdr_pgsql_apt_repository }}'
+    state: present
+    filename: 'pgsql'
+  notify: PostgreSQL BDR | Update cache
+
+- name: PostgreSQL BDR | Add 2ndQuadrant repo key
+  apt_key:
+    id: '{{ pgbdr_bdr_apt_key_id }}'
+    url: '{{ pgbdr_bdr_apt_key_url }}'
+    state: present
+
+- name: PostgreSQL BDR | Add 2ndQuadrant repo
+  apt_repository:
+    repo: '{{ pgbdr_bdr_apt_repository }}'
+    state: present
+    filename: 'bdr'
+  notify: PostgreSQL BDR | Update cache

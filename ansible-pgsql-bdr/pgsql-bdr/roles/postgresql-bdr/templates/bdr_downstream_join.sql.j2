@@ -1,0 +1,13 @@
+SELECT bdr.bdr_group_join(
+  local_node_name := '{{ inventory_hostname }}',
+  node_external_dsn := 'host={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} port={{ pgbdr_port }} dbname={{ pgbdr_database }}',
+  join_using_dsn := 'host={{ pgbdr_upstream_host }} port={{ pgbdr_port }} dbname={{ pgbdr_database }}'
+);
+SELECT bdr.bdr_node_join_wait_for_ready();
+
+
+SELECT bdr.bdr_group_join(
+  local_node_name := 'slave',
+  node_external_dsn := 'host=10.82.66.14 port=5432 dbname=sfm_db',
+  join_using_dsn := 'host=10.82.66.13 port=5432 dbname=sfm_db'
+);

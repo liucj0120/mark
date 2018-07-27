@@ -1,0 +1,13 @@
+---
+
+- name: PostgreSQL BDR | Install
+  apt:
+    cache_valid_time: 3600
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  with_items:
+    - postgresql-bdr-{{ pgbdr_version }}
+    - postgresql-bdr-{{ pgbdr_version }}-bdr-plugin
+    - python-psycopg2
+    - python3-psycopg2

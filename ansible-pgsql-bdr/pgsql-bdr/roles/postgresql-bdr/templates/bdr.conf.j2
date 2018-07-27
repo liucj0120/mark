@@ -1,0 +1,21 @@
+shared_preload_libraries = '{{ pgbdr_shared_preload_libraries | join(',') }}'
+wal_level = '{{ pgbdr_wal_level }}'
+track_commit_timestamp = {{ pgbdr_track_commit_timestamp }}
+max_connections = {{ pgbdr_max_connections }}
+max_wal_senders = {{ pgbdr_max_wal_senders }}
+max_replication_slots = {{ pgbdr_max_replication_slots }}
+# Make sure there are enough background worker slots for BDR to run
+max_worker_processes = {{ pgbdr_max_worker_processes }}
+
+{% if pgbdr_debug %}
+# These aren't required, but are useful for diagnosing problems
+log_error_verbosity = verbose
+log_min_messages = debug1
+log_line_prefix = 'd=%d p=%p a=%a%q '
+{% endif %}
+
+{% if pgbdr_delay %}
+# Useful options for playing with conflicts
+bdr.default_apply_delay = 2000   # milliseconds
+{% endif %}
+bdr.log_conflicts_to_table = {{ pgbdr_log_conflicts }}

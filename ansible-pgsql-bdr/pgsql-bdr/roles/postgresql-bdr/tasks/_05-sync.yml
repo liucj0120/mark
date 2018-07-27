@@ -1,0 +1,61 @@
+---
+- name: PostgreSQL BDR | Enable extensions
+  become: yes
+  become_user: "{{ pgbdr_admin_user }}"
+  postgresql_ext:
+    name: "{{ item }}"
+    db: "{{ pgbdr_database }}"
+  with_items:
+    - btree_gist
+    - bdr
+  register: bdrext
+
+- name: PostgreSQL BDR | Copy upstream SQL script
+  template:
+    src: "bdr_upstream_init.sql.j2"
+    dest: "/tmp/bdr_upstream_init.sql"
+  register: upscript
+  when:
+    - "'master' in group_names"
+    - bdrext.changed
+
+- name: PostgreSQL BDR | Execute upstream SQL script
+  become: yes
+  become_user: "{{ pgbdr_admin_user }}"
+  shell: "psql -d {{ pgbdr_database }} -p {{ pgbdr_port }} -U {{ pgbdr_admin_user }} -f /tmp/bdr_upstream_init.sql"
+  when:
+    - "'master' in group_names"
+    - upscript.changed
+
+- name: PostgreSQL BDR | Delete upstream SQL script
+  file:
+    path: "/tmp/bdr_upstream_init.sql"
+    state: absent
+  when:
+    - "'master' in group_names"
+    - upscript.changed
+
+- name: PostgreSQL BDR | Copy downstream SQL script
+  template:
+    src: "bdr_downstream_join.sql.j2"
+    dest: "/tmp/bdr_downstream_join.sql"
+  register: downscript
+  when:
+    - "'slave' in group_names"
+    - bdrext.changed
+
+- name: PostgreSQL BDR | Execute downstream SQL script
+  become: yes
+  become_user: "{{ pgbdr_admin_user }}"
+  shell: "psql -d {{ pgbdr_database }} -p {{ pgbdr_port }} -U {{ pgbdr_admin_user }} -f /tmp/bdr_downstream_join.sql"
+  when:
+    - "'slave' in group_names"
+    - downscript.changed
+
+- name: PostgreSQL BDR | Delete downstream SQL script
+  file:
+    path: "/tmp/bdr_downstream_join.sql"
+    state: absent
+  when:
+    - "'slave' in group_names"
+    - downscript.changed

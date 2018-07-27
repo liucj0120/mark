@@ -1,0 +1,51 @@
+---
+
+pgbdr_pgsql_apt_key_id: ACCC4CF8
+pgbdr_pgsql_apt_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+pgbdr_pgsql_apt_repository: 'deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main {{pgbdr_version}}'
+
+pgbdr_bdr_apt_key_id: AA7A6805
+pgbdr_bdr_apt_key_url: "http://packages.2ndquadrant.com/bdr/apt/AA7A6805.asc"
+pgbdr_bdr_apt_repository: 'deb http://packages.2ndquadrant.com/bdr/apt/ {{ansible_distribution_release}}-2ndquadrant main'
+
+# Basic settings
+pgbdr_version: 9.4
+pgbdr_cluster_name: "main"
+
+pgbdr_service_user: "postgres"
+pgbdr_service_group: "postgres"
+
+pgbdr_conf_directory: "/etc/postgresql/{{ pgbdr_version }}/{{ pgbdr_cluster_name }}"
+
+pgbdr_admin_user: "postgres"
+pgbdr_admin_password: ""
+pgbdr_default_auth_method: "trust"
+pgbdr_md5_auth_method: "md5"
+
+# pg_hba.conf
+pgbdr_pg_hba_default:
+  - { type: local, database: all,         user: '{{ pgbdr_admin_user }}', address: '',             method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: local, database: all,         user: all,                      address: '',             method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: all,         user: all,                      address: '127.0.0.1/32', method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: all,         user: all,                      address: '::1/128',      method: '{{ pgbdr_default_auth_method }}', comment: '' }
+
+pgbdr_pg_hba_passwd_hosts: []
+pgbdr_pg_hba_trust_hosts: []
+pgbdr_pg_hba_custom: 
+  - { type: host,  database: all,         user: '{{ pgbdr_admin_user }}',          address: '10.82.66.13/32',  method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: all,         user: '{{ pgbdr_admin_user }}',          address: '10.82.66.14/32',  method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: replication,         user: '{{ pgbdr_admin_user }}',          address: '10.82.66.13/32',  method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: replication,         user: '{{ pgbdr_admin_user }}',          address: '10.82.66.14/32',  method: '{{ pgbdr_default_auth_method }}', comment: '' }
+  - { type: host,  database: replication,         user: bdrsync,          address: '10.82.66.13/32',  method: '{{ pgbdr_md5_auth_method }}', comment: '' }
+  - { type: host,  database: replication,         user: bdrsync,          address: '10.82.66.14/32',  method: '{{ pgbdr_md5_auth_method }}', comment: '' }
+  - { type: host,  database: all,                 user: all,              address: '0.0.0.0/0',  method: '{{ pgbdr_md5_auth_method }}', comment: '' }
+
+# List of users to be created (optional)
+pgbdr_users:
+  - { name: "db_admin", password: "YR2UK1VfcKWIdIE6800x", encrypted: True, db: "sfm_db", role_attr_flags: "CREATEDB" }
+  - { name: "bdrsync", password: "replication_IdIE6800x", encrypted: True, role_attr_flags: "SUPERUSER" }
+
+# Monitoring
+pgbdr_monitoring: False
+pgbdr_cron_emails: []
+pgbdr_cron_user: root

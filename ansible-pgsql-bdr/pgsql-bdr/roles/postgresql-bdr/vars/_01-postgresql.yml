@@ -1,0 +1,487 @@
+---
+###
+# postgresql.conf default values
+###
+
+# Allows modifications of the structure of system tables.
+pgbdr_allow_system_table_mods: off
+# Sets the application name to be reported in statistics and logs.
+pgbdr_application_name: psql
+# Sets the shell command that will be called to archive a WAL file.
+pgbdr_archive_command: ''
+# Allows archiving of WAL files using archive_command.
+pgbdr_archive_mode: off
+# Forces a switch to the next xlog file if a new file has not been started within N seconds.
+pgbdr_archive_timeout: 0
+# Enable input of NULL elements in arrays.
+pgbdr_array_nulls: on
+# Sets the maximum allowed time to complete client authentication.
+pgbdr_authentication_timeout: 1min
+# Starts the autovacuum subprocess.
+pgbdr_autovacuum: on
+# Number of tuple inserts, updates, or deletes prior to analyze as a fraction of reltuples.
+pgbdr_autovacuum_analyze_scale_factor: 0.1
+# Minimum number of tuple inserts, updates, or deletes prior to analyze.
+pgbdr_autovacuum_analyze_threshold: 50
+# Age at which to autovacuum a table to prevent transaction ID wraparound.
+pgbdr_autovacuum_freeze_max_age: 200000000
+# Sets the maximum number of simultaneously running autovacuum worker processes.
+pgbdr_autovacuum_max_workers: 3
+# Multixact age at which to autovacuum a table to prevent multixact wraparound.
+pgbdr_autovacuum_multixact_freeze_max_age: 400000000
+# Time to sleep between autovacuum runs.
+pgbdr_autovacuum_naptime: 1min
+# Vacuum cost delay in milliseconds, for autovacuum.
+pgbdr_autovacuum_vacuum_cost_delay: 20ms
+# Vacuum cost amount available before napping, for autovacuum.
+pgbdr_autovacuum_vacuum_cost_limit: -1
+# Number of tuple updates or deletes prior to vacuum as a fraction of reltuples.
+pgbdr_autovacuum_vacuum_scale_factor: 0.2
+# Minimum number of tuple updates or deletes prior to vacuum.
+pgbdr_autovacuum_vacuum_threshold: 50
+# Sets the maximum memory to be used by each autovacuum worker process.
+pgbdr_autovacuum_work_mem: -1
+# Sets whether "\'" is allowed in string literals.
+pgbdr_backslash_quote: safe_encoding
+# Background writer sleep time between rounds.
+pgbdr_bgwriter_delay: 200ms
+# Background writer maximum number of LRU pages to flush per round.
+pgbdr_bgwriter_lru_maxpages: 100
+# Multiple of the average buffer usage to free per round.
+pgbdr_bgwriter_lru_multiplier: 2
+# Shows the size of a disk block.
+pgbdr_block_size: 8192
+# Enables advertising the server via Bonjour.
+pgbdr_bonjour: off
+# Sets the Bonjour service name.
+pgbdr_bonjour_name: ''
+# Sets the output format for bytea.
+pgbdr_bytea_output: hex
+# Check function bodies during CREATE FUNCTION.
+pgbdr_check_function_bodies: on
+# Time spent flushing dirty buffers during checkpoint, as fraction of checkpoint interval.
+pgbdr_checkpoint_completion_target: 0.5
+# Sets the maximum distance in log segments between automatic WAL checkpoints.
+pgbdr_checkpoint_segments: 3
+# Sets the maximum time between automatic WAL checkpoints.
+pgbdr_checkpoint_timeout: 5min
+# Enables warnings if checkpoint segments are filled more frequently than this.
+pgbdr_checkpoint_warning: 30s
+# Sets the client's character set encoding.
+pgbdr_client_encoding: UTF8
+# Sets the message levels that are sent to the client.
+pgbdr_client_min_messages: notice
+# Sets the delay in microseconds between transaction commit and flushing WAL to disk.
+pgbdr_commit_delay: 0
+# Sets the minimum concurrent open transactions before performing commit_delay.
+pgbdr_commit_siblings: 5
+# Sets the server's main configuration file.
+pgbdr_config_file: '{{ pgbdr_conf_directory }}/postgresql.conf'
+# Enables the planner to use constraints to optimize queries.
+pgbdr_constraint_exclusion: partition
+# Sets the planner's estimate of the cost of processing each index entry during an index scan.
+pgbdr_cpu_index_tuple_cost: 0.005
+# Sets the planner's estimate of the cost of processing each operator or function call.
+pgbdr_cpu_operator_cost: 0.0025
+# Sets the planner's estimate of the cost of processing each tuple (row).
+pgbdr_cpu_tuple_cost: 0.01
+# Sets the planner's estimate of the fraction of a cursor's rows that will be retrieved.
+pgbdr_cursor_tuple_fraction: 0.1
+# Shows whether data checksums are turned on for this cluster.
+pgbdr_data_checksums: off
+# Sets the server's data directory.
+pgbdr_data_directory: '/var/lib/postgresql/{{ pgbdr_version }}/{{ pgbdr_cluster_name}}'
+# Sets the display format for date and time values.
+pgbdr_datestyle: ['iso', 'mdy']
+# Enables per-database user names.
+pgbdr_db_user_namespace: off
+# Sets the time to wait on a lock before checking for deadlock.
+pgbdr_deadlock_timeout: 1s
+# Turns on various assertion checks.
+pgbdr_debug_assertions: off
+# Indents parse and plan tree displays.
+pgbdr_debug_pretty_print: on
+# Logs each query's parse tree.
+pgbdr_debug_print_parse: off
+# Logs each query's execution plan.
+pgbdr_debug_print_plan: off
+# Logs each query's rewritten parse tree.
+pgbdr_debug_print_rewritten: off
+# Sets the default sequence am for any new sequences.
+pgbdr_default_sequenceam:
+# Sets the default statistics target.
+pgbdr_default_statistics_target: 100
+# Sets the default tablespace to create tables and indexes in.
+pgbdr_default_tablespace: ''
+# Sets default text search configuration.
+pgbdr_default_text_search_config: pg_catalog.english
+# Sets the default deferrable status of new transactions.
+pgbdr_default_transaction_deferrable: off
+# Sets the transaction isolation level of each new transaction.
+pgbdr_default_transaction_isolation: read committed
+# Sets the default read-only status of new transactions.
+pgbdr_default_transaction_read_only: off
+# Create new tables with OIDs by default.
+pgbdr_default_with_oids: off
+# Sets the path for dynamically loadable modules.
+pgbdr_dynamic_library_path: $libdir
+# Selects the dynamic shared memory implementation used.
+pgbdr_dynamic_shared_memory_type: posix
+# Sets the planner's assumption about the size of the disk cache.
+pgbdr_effective_cache_size: 4GB
+# Number of simultaneous requests that can be handled efficiently by the disk subsystem.
+pgbdr_effective_io_concurrency: 1
+# Enables the planner's use of bitmap-scan plans.
+pgbdr_enable_bitmapscan: on
+# Enables the planner's use of hashed aggregation plans.
+pgbdr_enable_hashagg: on
+# Enables the planner's use of hash join plans.
+pgbdr_enable_hashjoin: on
+# Enables the planner's use of index-only-scan plans.
+pgbdr_enable_indexonlyscan: on
+# Enables the planner's use of index-scan plans.
+pgbdr_enable_indexscan: on
+# Enables the planner's use of materialization.
+pgbdr_enable_material: on
+# Enables the planner's use of merge join plans.
+pgbdr_enable_mergejoin: on
+# Enables the planner's use of nested-loop join plans.
+pgbdr_enable_nestloop: on
+# Enables the planner's use of sequential-scan plans.
+pgbdr_enable_seqscan: on
+# Enables the planner's use of explicit sort steps.
+pgbdr_enable_sort: on
+# Enables the planner's use of TID scan plans.
+pgbdr_enable_tidscan: on
+# Warn about backslash escapes in ordinary string literals.
+pgbdr_escape_string_warning: on
+# Sets the application name used to identify PostgreSQL messages in the event log.
+pgbdr_event_source: PostgreSQL
+# Terminate session on any error.
+pgbdr_exit_on_error: off
+# Writes the postmaster PID to the specified file.
+pgbdr_external_pid_file: '/var/run/postgresql/{{ pgbdr_version }}-{{ pgbdr_cluster_name }}.pid'
+# Sets the number of digits displayed for floating-point values.
+pgbdr_extra_float_digits: 0
+# Sets the FROM-list size beyond which subqueries are not collapsed.
+pgbdr_from_collapse_limit: 8
+# Forces synchronization of updates to disk.
+pgbdr_fsync: on
+# Writes full pages to WAL when first modified after a checkpoint.
+pgbdr_full_page_writes: on
+# Enables genetic query optimization.
+pgbdr_geqo: on
+# GEQO: effort is used to set the default for other GEQO parameters.
+pgbdr_geqo_effort: 5
+# GEQO: number of iterations of the algorithm.
+pgbdr_geqo_generations: 0
+# GEQO: number of individuals in the population.
+pgbdr_geqo_pool_size: 0
+# GEQO: seed for random path selection.
+pgbdr_geqo_seed: 0
+# GEQO: selective pressure within the population.
+pgbdr_geqo_selection_bias: 2
+# Sets the threshold of FROM items beyond which GEQO is used.
+pgbdr_geqo_threshold: 12
+# Sets the maximum allowed result for exact search by GIN.
+pgbdr_gin_fuzzy_search_limit: 0
+# Sets the server's "hba" configuration file.
+pgbdr_hba_file: '{{ pgbdr_conf_directory }}/pg_hba.conf'
+# Allows connections and queries during recovery.
+pgbdr_hot_standby: off
+# Allows feedback from a hot standby to the primary that will avoid query conflicts.
+pgbdr_hot_standby_feedback: off
+# Use of huge pages on Linux.
+pgbdr_huge_pages: try
+# Sets the server's "ident" configuration file.
+pgbdr_ident_file: '{{ pgbdr_conf_directory }}/pg_ident.conf'
+# Continues processing after a checksum failure.
+pgbdr_ignore_checksum_failure: off
+# Disables reading from system indexes.
+pgbdr_ignore_system_indexes: off
+# Datetimes are integer based.
+pgbdr_integer_datetimes: on
+# Sets the display format for interval values.
+pgbdr_intervalstyle: postgres
+# Sets the FROM-list size beyond which JOIN constructs are not flattened.
+pgbdr_join_collapse_limit: 8
+# Sets whether Kerberos and GSSAPI user names should be treated as case-insensitive.
+pgbdr_krb_caseins_users: off
+# Sets the location of the Kerberos server key file.
+pgbdr_krb_server_keyfile: FILE:/etc/postgresql-common/krb5.keytab
+# Shows the collation order locale.
+pgbdr_lc_collate: en_US.UTF-8
+# Shows the character classification and case conversion locale.
+pgbdr_lc_ctype: en_US.UTF-8
+# Sets the language in which messages are displayed.
+pgbdr_lc_messages: en_US.UTF-8
+# Sets the locale for formatting monetary amounts.
+pgbdr_lc_monetary: en_US.UTF-8
+# Sets the locale for formatting numbers.
+pgbdr_lc_numeric: en_US.UTF-8
+# Sets the locale for formatting date and time values.
+pgbdr_lc_time: en_US.UTF-8
+# Sets the host name or IP address(es) to listen to.
+pgbdr_listen_addresses: ['localhost']
+# Enables backward compatibility mode for privilege checks on large objects.
+pgbdr_lo_compat_privileges: off
+# Lists unprivileged shared libraries to preload into each backend.
+pgbdr_local_preload_libraries: []
+# Sets the maximum allowed duration of any wait for a lock.
+pgbdr_lock_timeout: 0
+# Sets the minimum execution time above which autovacuum actions will be logged.
+pgbdr_log_autovacuum_min_duration: -1
+# Logs each checkpoint.
+pgbdr_log_checkpoints: off
+# Logs each successful connection.
+pgbdr_log_connections: off
+# Sets the destination for server log output.
+pgbdr_log_destination: stderr
+# Sets the destination directory for log files.
+pgbdr_log_directory: pg_log
+# Logs end of a session, including duration.
+pgbdr_log_disconnections: off
+# Logs the duration of each completed SQL statement.
+pgbdr_log_duration: off
+# Sets the verbosity of logged messages.
+pgbdr_log_error_verbosity: default
+# Writes executor performance statistics to the server log.
+pgbdr_log_executor_stats: off
+# Sets the file permissions for log files.
+pgbdr_log_file_mode: 0600
+# Sets the file name pattern for log files.
+pgbdr_log_filename: 'postgresql-%Y-%m-%d_%H%M%S.log'
+# Logs the host name in the connection logs.
+pgbdr_log_hostname: off
+# Controls information prefixed to each log line.
+pgbdr_log_line_prefix: '%m [%p] %q%u@%d'
+# Logs long lock waits.
+pgbdr_log_lock_waits: off
+# Sets the minimum execution time above which statements will be logged.
+pgbdr_log_min_duration_statement: -1
+# Causes all statements generating error at or above this level to be logged.
+pgbdr_log_min_error_statement: error
+# Sets the message levels that are logged.
+pgbdr_log_min_messages: warning
+# Writes parser performance statistics to the server log.
+pgbdr_log_parser_stats: off
+# Writes planner performance statistics to the server log.
+pgbdr_log_planner_stats: off
+# Automatic log file rotation will occur after N minutes.
+pgbdr_log_rotation_age: 1d
+# Automatic log file rotation will occur after N kilobytes.
+pgbdr_log_rotation_size: 10MB
+# Sets the type of statements logged.
+pgbdr_log_statement: none
+# Writes cumulative performance statistics to the server log.
+pgbdr_log_statement_stats: off
+# Log the use of temporary files larger than this number of kilobytes.
+pgbdr_log_temp_files: -1
+# Sets the time zone to use in log messages.
+pgbdr_log_timezone: UTC
+# Truncate existing log files of same name during log rotation.
+pgbdr_log_truncate_on_rotation: off
+# Start a subprocess to capture stderr output and/or csvlogs into log files.
+pgbdr_logging_collector: off
+# Sets the maximum memory to be used for maintenance operations.
+pgbdr_maintenance_work_mem: 64MB
+# Sets the maximum number of concurrent connections.
+pgbdr_max_connections: 100
+# Sets the maximum number of simultaneously open files for each server process.
+pgbdr_max_files_per_process: 1000
+# Shows the maximum number of function arguments.
+pgbdr_max_function_args: 100
+# Shows the maximum identifier length.
+pgbdr_max_identifier_length: 63
+# Shows the maximum number of index keys.
+pgbdr_max_index_keys: 32
+# Sets the maximum number of locks per transaction.
+pgbdr_max_locks_per_transaction: 64
+# Sets the maximum number of predicate locks per transaction.
+pgbdr_max_pred_locks_per_transaction: 64
+# Sets the maximum number of simultaneously prepared transactions.
+pgbdr_max_prepared_transactions: 0
+# Sets the maximum number of simultaneously defined replication slots.
+pgbdr_max_replication_slots: 0
+# Sets the maximum stack depth, in kilobytes.
+pgbdr_max_stack_depth: 2MB
+# Sets the maximum delay before canceling queries when a hot standby server is processing archived WAL data.
+pgbdr_max_standby_archive_delay: 30s
+# Sets the maximum delay before canceling queries when a hot standby server is processing streamed WAL data.
+pgbdr_max_standby_streaming_delay: 30s
+# Sets the maximum number of simultaneously running WAL sender processes.
+pgbdr_max_wal_senders: 0
+# Maximum number of concurrent worker processes.
+pgbdr_max_worker_processes: 8
+# Encrypt passwords.
+pgbdr_password_encryption: on
+# Sets the TCP port the server listens on.
+pgbdr_port: 5432
+# Waits N seconds on connection startup after authentication.
+pgbdr_post_auth_delay: 0
+# Waits N seconds on connection startup before authentication.
+pgbdr_pre_auth_delay: 0
+# When generating SQL fragments, quote all identifiers.
+pgbdr_quote_all_identifiers: off
+# Sets the planner's estimate of the cost of a nonsequentially fetched disk page.
+pgbdr_random_page_cost: 4
+# Reinitialize server after backend crash.
+pgbdr_restart_after_crash: on
+# Sets the schema search order for names that are not schema-qualified.
+pgbdr_search_path: ['"$user"', 'public']
+# Shows the number of pages per disk file.
+pgbdr_segment_size: 1GB
+# Sets the planner's estimate of the cost of a sequentially fetched disk page.
+pgbdr_seq_page_cost: 1
+# Sets the server (database) character set encoding.
+pgbdr_server_encoding: UTF8
+# Shows the server version.
+pgbdr_server_version: 9.4.14
+# Shows the server version as an integer.
+pgbdr_server_version_num: 90414
+# Lists shared libraries to preload into each backend.
+pgbdr_session_preload_libraries:
+# Sets the session's behavior for triggers and rewrite rules.
+pgbdr_session_replication_role: origin
+# Sets the number of shared memory buffers used by the server.
+pgbdr_shared_buffers: 128MB
+# Lists shared libraries to preload into server.
+pgbdr_shared_preload_libraries: []
+# Causes subtables to be included by default in various commands.
+pgbdr_sql_inheritance: on
+# Enables SSL connections.
+pgbdr_ssl: on
+# Location of the SSL certificate authority file.
+pgbdr_ssl_ca_file:
+# Location of the SSL server certificate file.
+pgbdr_ssl_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+# Sets the list of allowed SSL ciphers.
+pgbdr_ssl_ciphers: HIGH:MEDIUM:+3DES:!aNULL
+# Location of the SSL certificate revocation list file.
+pgbdr_ssl_crl_file:
+# Sets the curve to use for ECDH.
+pgbdr_ssl_ecdh_curve: prime256v1
+# Location of the SSL server private key file.
+pgbdr_ssl_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+# Give priority to server ciphersuite order.
+pgbdr_ssl_prefer_server_ciphers: on
+# Set the amount of traffic to send and receive before renegotiating the encryption keys.
+pgbdr_ssl_renegotiation_limit: 0
+# Causes '...' strings to treat backslashes literally.
+pgbdr_standard_conforming_strings: on
+# Sets the maximum allowed duration of any statement.
+pgbdr_statement_timeout: 0
+# Writes temporary statistics files to the specified directory.
+pgbdr_stats_temp_directory: '/var/run/postgresql/{{ pgbdr_version }}-{{ pgbdr_cluster_name }}.pg_stat_tmp'
+# Sets the number of connection slots reserved for superusers.
+pgbdr_superuser_reserved_connections: 3
+# Enable synchronized sequential scans.
+pgbdr_synchronize_seqscans: on
+# Sets the current transaction's synchronization level.
+pgbdr_synchronous_commit: on
+# List of names of potential synchronous standbys.
+pgbdr_synchronous_standby_names: []
+# Sets the syslog "facility" to be used when syslog enabled.
+pgbdr_syslog_facility: local0
+# Sets the program name used to identify PostgreSQL messages in syslog.
+pgbdr_syslog_ident: postgres
+# Maximum number of TCP keepalive retransmits.
+pgbdr_tcp_keepalives_count: 0
+# Time between issuing TCP keepalives.
+pgbdr_tcp_keepalives_idle: 0
+# Time between TCP keepalive retransmits.
+pgbdr_tcp_keepalives_interval: 0
+# Sets the maximum number of temporary buffers used by each session.
+pgbdr_temp_buffers: 8MB
+# Limits the total size of all temporary files used by each session.
+pgbdr_temp_file_limit: -1
+# Sets the tablespace(s) to use for temporary tables and sort files.
+pgbdr_temp_tablespaces: []
+# Sets the time zone for displaying and interpreting time stamps.
+pgbdr_timezone: UTC
+# Selects a file of time zone abbreviations.
+pgbdr_timezone_abbreviations: Default
+# Generates debugging output for LISTEN and NOTIFY.
+pgbdr_trace_notify: off
+# Enables logging of recovery-related debugging information.
+pgbdr_trace_recovery_messages: log
+# Emit information about resource usage in sorting.
+pgbdr_trace_sort: off
+# Collects information about executing commands.
+pgbdr_track_activities: on
+# Sets the size reserved for pg_stat_activity.query, in bytes.
+pgbdr_track_activity_query_size: 1024
+# Collects transaction commit time.
+pgbdr_track_commit_timestamp: off
+# Collects statistics on database activity.
+pgbdr_track_counts: on
+# Collects function-level statistics on database activity.
+pgbdr_track_functions: none
+# Collects timing statistics for database I/O activity.
+pgbdr_track_io_timing: off
+# Whether to defer a read-only serializable transaction until it can be executed with no possible serialization failures.
+pgbdr_transaction_deferrable: off
+# Sets the current transaction's isolation level.
+pgbdr_transaction_isolation: 'read committed'
+# Sets the current transaction's read-only status.
+pgbdr_transaction_read_only: off
+# Treats "expr=NULL" as "expr IS NULL".
+pgbdr_transform_null_equals: off
+# Sets the directories where Unix-domain sockets will be created.
+pgbdr_unix_socket_directories: /var/run/postgresql
+# Sets the owning group of the Unix-domain socket.
+pgbdr_unix_socket_group: ''
+# Sets the access permissions of the Unix-domain socket.
+pgbdr_unix_socket_permissions: 0777
+# Updates the process title to show the active SQL command.
+pgbdr_update_process_title: on
+# Vacuum cost delay in milliseconds.
+pgbdr_vacuum_cost_delay: 0
+# Vacuum cost amount available before napping.
+pgbdr_vacuum_cost_limit: 200
+# Vacuum cost for a page dirtied by vacuum.
+pgbdr_vacuum_cost_page_dirty: 20
+# Vacuum cost for a page found in the buffer cache.
+pgbdr_vacuum_cost_page_hit: 1
+# Vacuum cost for a page not found in the buffer cache.
+pgbdr_vacuum_cost_page_miss: 10
+# Number of transactions by which VACUUM and HOT cleanup should be deferred, if any.
+pgbdr_vacuum_defer_cleanup_age: 0
+# Minimum age at which VACUUM should freeze a table row.
+pgbdr_vacuum_freeze_min_age: 50000000
+# Age at which VACUUM should scan whole table to freeze tuples.
+pgbdr_vacuum_freeze_table_age: 150000000
+# Minimum age at which VACUUM should freeze a MultiXactId in a table row.
+pgbdr_vacuum_multixact_freeze_min_age: 5000000
+# Multixact age at which VACUUM should scan whole table to freeze tuples.
+pgbdr_vacuum_multixact_freeze_table_age: 150000000
+# Shows the block size in the write ahead log.
+pgbdr_wal_block_size: 8192
+# Sets the number of disk-page buffers in shared memory for WAL.
+pgbdr_wal_buffers: 4MB
+# Sets the number of WAL files held for standby servers.
+pgbdr_wal_keep_segments: 0
+# Set the level of information written to the WAL.
+pgbdr_wal_level: minimal
+# Writes full pages to WAL when first modified after a checkpoint, even for a non-critical modifications.
+pgbdr_wal_log_hints: off
+# Sets the maximum interval between WAL receiver status reports to the primary.
+pgbdr_wal_receiver_status_interval: 10s
+# Sets the maximum wait time to receive data from the primary.
+pgbdr_wal_receiver_timeout: 1min
+# Shows the number of pages per write ahead log segment.
+pgbdr_wal_segment_size: 16MB
+# Sets the maximum time to wait for WAL replication.
+pgbdr_wal_sender_timeout: 1min
+# Selects the method used for forcing WAL updates to disk.
+pgbdr_wal_sync_method: fdatasync
+# WAL writer sleep time between WAL flushes.
+pgbdr_wal_writer_delay: 200ms
+# Sets the maximum memory to be used for query workspaces.
+pgbdr_work_mem: 4MB
+# Sets how binary values are to be encoded in XML.
+pgbdr_xmlbinary: base64
+# Sets whether XML data in implicit parsing and serialization operations is to be considered as documents or content fragments.
+pgbdr_xmloption: content
+# Continues processing past damaged page headers.
+pgbdr_zero_damaged_pages: off

@@ -1,0 +1,24 @@
+---
+###
+# Override _01-postgresql.yml variables
+###
+
+pgbdr_listen_addresses: ['*']
+pgbdr_port: 5432
+
+pgbdr_shared_preload_libraries: ['bdr']
+pgbdr_wal_level: logical
+pgbdr_track_commit_timestamp: on
+pgbdr_max_connections: 100
+pgbdr_max_wal_senders: 10
+pgbdr_max_replication_slots: 10
+pgbdr_max_worker_processes: 10
+
+pgbdr_debug: false
+pgbdr_log_conflicts: on
+
+pgbdr_delay: false
+
+pgbdr_upstream_host: ''
+pgbdr_first_downstream_host: ''
+pgbdr_database: ''

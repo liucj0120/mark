@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+import logging
+from logging.handlers import SysLogHandler
+import psycopg2
+import sys
+
+connect = {
+    'host': '{% if 'master' in group_names %}{{ pgbdr_first_downstream_host }}{% else %}{{ pgbdr_upstream_host }}{% endif %}',
+    'dbname': '{{ pgbdr_database }}',
+    'user': '{{ pgbdr_admin_user }}',
+    'password': '{{ pgbdr_admin_password | default("''") }}',
+}
+
+
+log = logging.getLogger('pgbdrmonit')
+log.setLevel(logging.DEBUG)
+# log everything in syslog
+syslog = SysLogHandler(address='/dev/log')
+syslog.setLevel(logging.INFO)
+formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+syslog.setFormatter(formatter)
+log.addHandler(syslog)
+# log info in stdout
+console = logging.StreamHandler()
+console.setLevel(logging.WARNING)
+log.addHandler(console)
+
+try:
+    # connection
+    con = psycopg2.connect(**connect)
+    # query
+    cur = con.cursor()
+    cur.execute('SELECT node_name, node_status FROM bdr.bdr_nodes;')
+    data = cur.fetchall()
+    cur.close()
+    # output
+    log.info(str(data))
+    sys.exit(0)
+except Exception as e:
+    # output
+    log.error(str(e))
+    sys.exit(1)

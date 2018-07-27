@@ -1,0 +1,25 @@
+---
+
+- name: PostgreSQL BDR | Start
+  service:
+    name: postgresql@{{ pgbdr_version }}-{{ pgbdr_cluster_name }}
+    state: started
+
+- name: PostgreSQL BDR | Stop
+  service:
+    name: postgresql@{{ pgbdr_version }}-{{ pgbdr_cluster_name }}
+    state: stopped
+
+- name: PostgreSQL BDR | Restart
+  service:
+    name: postgresql@{{ pgbdr_version }}-{{ pgbdr_cluster_name }}
+    state: restarted
+
+- name: PostgreSQL BDR | Reload
+  service:
+    name: postgresql@{{ pgbdr_version }}-{{ pgbdr_cluster_name }}
+    state: reloaded
+
+- name: PostgreSQL BDR | Update cache
+  apt:
+    update_cache: yes
